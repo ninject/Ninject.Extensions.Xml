@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<module name="providerTest">
+	<bind service="Ninject.Extensions.Xml.Tests.Fakes.IWeapon, Ninject.Extensions.Xml.Tests"
+				toProvider="Ninject.Extensions.Xml.Tests.Fakes.WeaponProvider, Ninject.Extensions.Xml.Tests" />
+</module>
