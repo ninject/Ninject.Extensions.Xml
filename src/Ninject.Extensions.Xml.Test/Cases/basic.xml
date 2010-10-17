@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<module name="basicTest">
+    <bind name="melee"
+                service="Ninject.Extensions.Xml.Test.Fakes.IWeapon, Ninject.Extensions.Xml.Test"
+                to="Ninject.Extensions.Xml.Test.Fakes.Sword, Ninject.Extensions.Xml.Test" />
+    <bind name="range"
+                service="Ninject.Extensions.Xml.Test.Fakes.IWeapon, Ninject.Extensions.Xml.Test"
+                to="Ninject.Extensions.Xml.Test.Fakes.Shuriken, Ninject.Extensions.Xml.Test" />
+</module>

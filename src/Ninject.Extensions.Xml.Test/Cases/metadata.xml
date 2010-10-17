@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<module name="metadataTest">
+    <bind service="Ninject.Extensions.Xml.Test.Fakes.IWeapon, Ninject.Extensions.Xml.Test"
+                to="Ninject.Extensions.Xml.Test.Fakes.Sword, Ninject.Extensions.Xml.Test">
+        <metadata key="metal" value="iron"/>
+        <metadata key="class" value="melee"/>
+    </bind>
+    <bind service="Ninject.Extensions.Xml.Test.Fakes.IWeapon, Ninject.Extensions.Xml.Test"
+                to="Ninject.Extensions.Xml.Test.Fakes.Shuriken, Ninject.Extensions.Xml.Test">
+        <metadata key="metal" value="iron"/>
+        <metadata key="class" value="range"/>
+    </bind>
+</module>

@@ -1,149 +1,218 @@
-﻿#region License
-// 
+﻿// 
 // Author: Nate Kohari <nate@enkari.com>
 // Copyright (c) 2007-2009, Enkari, Ltd.
 // 
 // Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
 // See the file LICENSE.txt for details.
 // 
-#endregion
-#region Using Directives
-using System;
-using System.Configuration;
-using System.Xml.Linq;
-using Ninject.Components;
-using Ninject.Extensions.Xml.Handlers.Extensions;
-using Ninject.Planning.Bindings;
-using Ninject.Syntax;
-#endregion
 
 namespace Ninject.Extensions.Xml.Handlers
 {
-	public class BindElementHandler : NinjectComponent, IXmlElementHandler
-	{
-		public string ElementName
-		{
-			get { return "bind"; }
-		}
+    using System;
+    using System.Configuration;
+    using System.Xml.Linq;
+    using Ninject.Components;
+    using Ninject.Extensions.Xml.Extensions;
+    using Ninject.Planning.Bindings;
 
-		public void Handle(XmlModule module, XElement element)
-		{
-			XAttribute serviceAttribute = element.RequiredAttribute("service");
+    /// <summary>
+    /// HAndler for the "Bind" Element
+    /// </summary>
+    public class BindElementHandler : NinjectComponent, IXmlElementHandler
+    {
+        /// <summary>
+        /// The ninject kernel.
+        /// </summary>
+        private readonly IKernel kernel;
 
-			Type service = GetTypeFromAttributeValue(serviceAttribute);
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BindElementHandler"/> class.
+        /// </summary>
+        /// <param name="kernel">The ninject kernel.</param>
+        public BindElementHandler(IKernel kernel)
+        {
+            this.kernel = kernel;
+        }
 
-			var binding = new Binding(service);
-			var builder = new BindingBuilder<object>(binding);
+        /// <summary>
+        /// Gets the name of the element that is handled by this handler.
+        /// </summary>
+        /// <value>The name of the element that is handled by this handler.</value>
+        public string ElementName
+        {
+            get { return "bind"; }
+        }
 
-			module.AddBinding(binding);
+        /// <summary>
+        /// Handles the XElement.
+        /// </summary>
+        /// <param name="module">The module.</param>
+        /// <param name="element">The element.</param>
+        public void Handle(XmlModule module, XElement element)
+        {
+            XAttribute serviceAttribute = element.RequiredAttribute("service");
 
-			if (!HandleTarget(element, builder))
-				throw new ConfigurationErrorsException("The 'bind' element does not define either a 'to' or 'toProvider' attribute.");
+            Type service = GetTypeFromAttributeValue(serviceAttribute);
 
-			ReadName(element, builder);
-			ReadMetadata(element, builder);
-			ReadScope(element, builder);
-		}
+            var binding = new Binding(service);
+            var builder = new BindingBuilder<object>(binding, this.kernel);
 
-		private void ReadName(XElement element, BindingBuilder<object> builder)
-		{
-			var nameAttribute = element.Attribute("name");
+            module.AddBinding(binding);
 
-			if (nameAttribute != null)
-				builder.Named(nameAttribute.Value);
-		}
+            if (!HandleTarget(element, builder))
+            {
+                throw new ConfigurationErrorsException("The 'bind' element does not define either a 'to' or 'toProvider' attribute.");
+            }
 
-		private void ReadMetadata(XElement element, BindingBuilder<object> builder)
-		{
-			foreach (XElement metadataElement in element.Elements("metadata"))
-			{
-				XAttribute keyAttribute = metadataElement.RequiredAttribute("key");
-				XAttribute valueAttribute = metadataElement.RequiredAttribute("value");
+            ReadName(element, builder);
+            ReadMetadata(element, builder);
+            ReadScope(element, builder);
+        }
 
-				builder.WithMetadata(keyAttribute.Value, valueAttribute.Value);
-			}
-		}
+        /// <summary>
+        /// Reads the name attribute.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="builder">The builder.</param>
+        private static void ReadName(XElement element, BindingBuilder<object> builder)
+        {
+            var nameAttribute = element.Attribute("name");
 
-		private void ReadScope(XElement element, BindingBuilder<object> builder)
-		{
-			XAttribute scopeAttribute = element.Attribute("scope");
+            if (nameAttribute != null)
+            {
+                builder.Named(nameAttribute.Value);
+            }
+        }
 
-			if (scopeAttribute == null || String.IsNullOrEmpty(scopeAttribute.Value))
-			{
-				builder.InTransientScope();
-				return;
-			}
+        /// <summary>
+        /// Reads the metadata.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="builder">The builder.</param>
+        private static void ReadMetadata(XElement element, BindingBuilder<object> builder)
+        {
+            foreach (XElement metadataElement in element.Elements("metadata"))
+            {
+                XAttribute keyAttribute = metadataElement.RequiredAttribute("key");
+                XAttribute valueAttribute = metadataElement.RequiredAttribute("value");
 
-			string value = scopeAttribute.Value.ToLower();
+                builder.WithMetadata(keyAttribute.Value, valueAttribute.Value);
+            }
+        }
 
-			switch (value)
-			{
-				case "transient":
-					builder.InTransientScope();
-					break;
+        /// <summary>
+        /// Reads the scope.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="builder">The builder.</param>
+        private static void ReadScope(XElement element, BindingBuilder<object> builder)
+        {
+            XAttribute scopeAttribute = element.Attribute("scope");
 
-				case "singleton":
-					builder.InSingletonScope();
-					break;
+            if (scopeAttribute == null || String.IsNullOrEmpty(scopeAttribute.Value))
+            {
+                builder.InTransientScope();
+                return;
+            }
 
-				case "thread":
-					builder.InThreadScope();
-					break;
+            string value = scopeAttribute.Value.ToLower();
 
-				case "request":
-					builder.InRequestScope();
-					break;
+            switch (value)
+            {
+                case "transient":
+                    builder.InTransientScope();
+                    break;
 
-				default:
-					throw new ConfigurationErrorsException(String.Format("The 'bind' element has an unknown value '{0}' for its 'scope' attribute. Valid values are transient, singleton, thread, and request.", value));
-			}
-		}
+                case "singleton":
+                    builder.InSingletonScope();
+                    break;
 
-		private bool HandleTarget(XElement element, BindingBuilder<object> builder)
-		{
-			if (TryHandleToAttribute(element, builder))
-				return true;
+                case "thread":
+                    builder.InThreadScope();
+                    break;
 
-			if (TryHandleToProviderAttribute(element, builder))
-				return true;
+#if !NO_WEB
+                case "request":
+                    builder.InRequestScope();
+                    break;
+#endif
 
-			return false;
-		}
+                default:
+                    throw new ConfigurationErrorsException(String.Format("The 'bind' element has an unknown value '{0}' for its 'scope' attribute. Valid values are transient, singleton, thread, and request.", value));
+            }
+        }
 
-		private bool TryHandleToAttribute(XElement element, BindingBuilder<object> builder)
-		{
-			XAttribute toAttribute = element.Attribute("to");
+        /// <summary>
+        /// Handles the target attribute.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="builder">The builder.</param>
+        /// <returns>True if To or ToProvider was found.</returns>
+        private static bool HandleTarget(XElement element, BindingBuilder<object> builder)
+        {
+            return 
+                TryHandleToAttribute(element, builder) || 
+                TryHandleToProviderAttribute(element, builder);
+        }
 
-			if (toAttribute == null)
-				return false;
+        /// <summary>
+        /// Tries to handle the to attribute.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="builder">The builder.</param>
+        /// <returns>True if the To Attribute was found</returns>
+        private static bool TryHandleToAttribute(XElement element, BindingBuilder<object> builder)
+        {
+            XAttribute toAttribute = element.Attribute("to");
 
-			Type implementation = GetTypeFromAttributeValue(toAttribute);
-			builder.To(implementation);
+            if (toAttribute == null)
+            {
+                return false;
+            }
 
-			return true;
-		}
+            Type implementation = GetTypeFromAttributeValue(toAttribute);
+            builder.To(implementation);
 
-		private bool TryHandleToProviderAttribute(XElement element, BindingBuilder<object> builder)
-		{
-			XAttribute providerAttribute = element.Attribute("toProvider");
+            return true;
+        }
 
-			if (providerAttribute == null)
-				return false;
+        /// <summary>
+        /// Tries to handle the ToProvider attribute.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="builder">The builder.</param>
+        /// <returns>True if the attribute was found.</returns>
+        private static bool TryHandleToProviderAttribute(XElement element, BindingBuilder<object> builder)
+        {
+            XAttribute providerAttribute = element.Attribute("toProvider");
 
-			Type provider = GetTypeFromAttributeValue(providerAttribute);
-			builder.ToProvider(provider);
+            if (providerAttribute == null)
+            {
+                return false;
+            }
 
-			return true;
-		}
+            Type provider = GetTypeFromAttributeValue(providerAttribute);
+            builder.ToProvider(provider);
 
-		private Type GetTypeFromAttributeValue(XAttribute attribute)
-		{
-			Type service = Type.GetType(attribute.Value, false);
+            return true;
+        }
 
-			if (service == null)
-				throw new ConfigurationErrorsException(String.Format("Couldn't resolve type '{0}' defined in '{1}' attribute.", attribute.Value, attribute.Name));
+        /// <summary>
+        /// Gets the type from attribute value.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <returns>The type specified by the attribute.</returns>
+        private static Type GetTypeFromAttributeValue(XAttribute attribute)
+        {
+            Type service = Type.GetType(attribute.Value, false);
 
-			return service;
-		}
-	}
+            if (service == null)
+            {
+                throw new ConfigurationErrorsException(
+                    String.Format("Couldn't resolve type '{0}' defined in '{1}' attribute.", attribute.Value, attribute.Name));
+            }
+
+            return service;
+        }
+    }
 }

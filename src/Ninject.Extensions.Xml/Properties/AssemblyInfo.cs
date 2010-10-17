@@ -14,11 +14,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 #endregion
 
-[assembly: AssemblyProduct("Ninject: Lightweight dependency injection for .NET")]
-[assembly: AssemblyTitle("Ninject XML Module Extension")]
-[assembly: AssemblyCompany("Enkari, Ltd.")]
-[assembly: AssemblyCopyright("Copyright © 2007-2009 Enkari, Ltd. and contributors")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
+#if !NETCF
 [assembly: AllowPartiallyTrustedCallers]
+#endif
