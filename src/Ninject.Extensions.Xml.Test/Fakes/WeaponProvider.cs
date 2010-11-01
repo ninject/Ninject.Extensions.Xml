@@ -1,4 +1,4 @@
-﻿namespace Ninject.Extensions.Xml.Test.Fakes
+﻿namespace Ninject.Extensions.Xml.Fakes
 {
     using Ninject.Activation;
 

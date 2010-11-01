@@ -1,10 +1,10 @@
-﻿namespace Ninject.Extensions.Xml.Test
+﻿namespace Ninject.Extensions.Xml
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using Ninject.Extensions.Xml.Handlers;
-    using Ninject.Extensions.Xml.Test.Fakes;
+    using Ninject.Extensions.Xml.Fakes;
     using Ninject.Planning.Bindings;
     using Xunit;
     using Xunit.Should;

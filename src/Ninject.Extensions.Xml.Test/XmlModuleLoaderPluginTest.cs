@@ -1,7 +1,7 @@
-﻿namespace Ninject.Extensions.Xml.Test
+﻿namespace Ninject.Extensions.Xml
 {
     using System.Linq;
-    using Ninject.Extensions.Xml.Test.Fakes;
+    using Ninject.Extensions.Xml.Fakes;
     using Xunit;
     using Xunit.Should;
 
