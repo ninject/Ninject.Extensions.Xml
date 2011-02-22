@@ -7,7 +7,7 @@
 	<property name="product.description" value="Xml binding configuration extension for Ninject" overwrite="false"/>
 	<property name="product.platforms" value="net-3.5,net-3.5-no-web,net-4.0,net-4.0-no-web,mono-2.0,mono-2.0-no-web"  overwrite="false"/>
 	<property name="product.buildserverPlatforms" value="net-3.5,net-3.5-no-web,net-4.0,net-4.0-no-web,mono-2.0,mono-2.0-no-web"  overwrite="false"/>
-	<property name="dependencies" value="Ninject,Ninject.Extensions.ContextPreservation"  overwrite="false"/>
+	<property name="dependencies" value="Ninject"  overwrite="false"/>
 
 	<include buildfile="Ninject.include" />
 	<target name="all" depends="core test"/>
