@@ -131,7 +131,7 @@ namespace Ninject.Extensions.Xml.Handlers
                     builder.InThreadScope();
                     break;
 
-#if !NO_WEB
+#if WEB
                 case "request":
                     builder.InRequestScope();
                     break;
