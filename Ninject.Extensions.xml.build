@@ -11,6 +11,7 @@
 
 	<include buildfile="Ninject.include" />
 	<target name="all" depends="core test"/>
+	<target name="nuget-all" depends="nuget"/>
 
 	<target name="core" depends="init">
 		<copy todir="${current.path.build.lib}" if="${string::contains(build.platform, 'silverlight')}">
