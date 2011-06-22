@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
+
+    using FluentAssertions;
+
     using Ninject.Extensions.Xml.Handlers;
     using Ninject.Extensions.Xml.Fakes;
     using Ninject.Planning.Bindings;
     using Xunit;
-    using Xunit.Should;
 
     public class XmlModuleContext
     {
@@ -35,20 +37,20 @@
         [Fact]
         public void ModuleIsNamedAppropriately()
         {
-            module.Name.ShouldBe("basicTest");
+            module.Name.Should().Be("basicTest");
         }
 
         [Fact]
         public void ModuleLoadsBindings()
         {
             var bindings = module.Bindings.ToList();
-            bindings.Count.ShouldBe(2);
+            bindings.Count.Should().Be(2);
 
-            bindings[0].Service.ShouldBe(typeof(IWeapon));
-            bindings[0].Target.ShouldBe(BindingTarget.Type);
+            bindings[0].Service.Should().Be(typeof(IWeapon));
+            bindings[0].Target.Should().Be(BindingTarget.Type);
 
-            bindings[1].Service.ShouldBe(typeof(IWeapon));
-            bindings[1].Target.ShouldBe(BindingTarget.Type);
+            bindings[1].Service.Should().Be(typeof(IWeapon));
+            bindings[1].Target.Should().Be(BindingTarget.Type);
         }
     }
 
@@ -66,17 +68,17 @@
         [Fact]
         public void ModuleIsNamedAppropriately()
         {
-            module.Name.ShouldBe("providerTest");
+            module.Name.Should().Be("providerTest");
         }
 
         [Fact]
         public void ModuleLoadsBindings()
         {
             var bindings = module.Bindings.ToList();
-            bindings.Count.ShouldBe(1);
+            bindings.Count.Should().Be(1);
 
-            bindings[0].Service.ShouldBe(typeof(IWeapon));
-            bindings[0].Target.ShouldBe(BindingTarget.Provider);
+            bindings[0].Service.Should().Be(typeof(IWeapon));
+            bindings[0].Target.Should().Be(BindingTarget.Provider);
         }
     }
 
@@ -95,15 +97,15 @@
         public void ModuleLoadsBindingMetadata()
         {
             var bindings = module.Bindings.ToList();
-            bindings.Count.ShouldBe(2);
+            bindings.Count.Should().Be(2);
 
-            bindings[0].Service.ShouldBe(typeof(IWeapon));
-            bindings[0].Metadata.Get<string>("metal").ShouldBe("iron");
-            bindings[0].Metadata.Get<string>("class").ShouldBe("melee");
+            bindings[0].Service.Should().Be(typeof(IWeapon));
+            bindings[0].Metadata.Get<string>("metal").Should().Be("iron");
+            bindings[0].Metadata.Get<string>("class").Should().Be("melee");
 
-            bindings[1].Service.ShouldBe(typeof(IWeapon));
-            bindings[1].Metadata.Get<string>("metal").ShouldBe("iron");
-            bindings[1].Metadata.Get<string>("class").ShouldBe("range");
+            bindings[1].Service.Should().Be(typeof(IWeapon));
+            bindings[1].Metadata.Get<string>("metal").Should().Be("iron");
+            bindings[1].Metadata.Get<string>("class").Should().Be("range");
         }
     }
 }

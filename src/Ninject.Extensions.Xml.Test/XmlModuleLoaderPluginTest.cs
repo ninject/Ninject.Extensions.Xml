@@ -1,9 +1,11 @@
 ﻿namespace Ninject.Extensions.Xml
 {
     using System.Linq;
+
+    using FluentAssertions;
+
     using Ninject.Extensions.Xml.Fakes;
     using Xunit;
-    using Xunit.Should;
 
     public class XmlModuleLoaderPluginContext
     {
@@ -26,37 +28,37 @@
         [Fact]
         public void ModulesAreLoaded()
         {
-            kernel.HasModule("basicTest").ShouldBeTrue();
-            kernel.HasModule("providerTest").ShouldBeTrue();
-            kernel.HasModule("metadataTest").ShouldBeTrue();
+            kernel.HasModule("basicTest").Should().BeTrue();
+            kernel.HasModule("providerTest").Should().BeTrue();
+            kernel.HasModule("metadataTest").Should().BeTrue();
         }
 
         [Fact]
         public void CanActivateServicesDefinedInModules()
         {
             var weapons = kernel.GetAll<IWeapon>().ToList();
-            weapons.Count.ShouldBe(5);
+            weapons.Count.Should().Be(5);
         }
 
         [Fact]
         public void CanActivateServiceByName()
         {
             var weapon1 = kernel.Get<IWeapon>("melee");
-            weapon1.ShouldNotBeNull();
-            weapon1.ShouldBeInstanceOf<Sword>();
+            weapon1.Should().NotBeNull();
+            weapon1.Should().BeOfType<Sword>();
 
             var weapon2 = kernel.Get<IWeapon>("range");
-            weapon2.ShouldNotBeNull();
-            weapon2.ShouldBeInstanceOf<Shuriken>();
+            weapon2.Should().NotBeNull();
+            weapon2.Should().BeOfType<Shuriken>();
         }
 
         [Fact]
         public void CanActivateServiceByMetadata()
         {
             var ironWeapons = kernel.GetAll<IWeapon>(w => w.Get<string>("metal") == "iron").ToList();
-            ironWeapons.Count.ShouldBe(2);
-            ironWeapons[0].ShouldBeInstanceOf<Sword>();
-            ironWeapons[1].ShouldBeInstanceOf<Shuriken>();
+            ironWeapons.Count.Should().Be(2);
+            ironWeapons[0].Should().BeOfType<Sword>();
+            ironWeapons[1].Should().BeOfType<Shuriken>();
         }
     }
 }
