@@ -52,15 +52,25 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Ninject.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\tools\FluentAssertions\Net-3.5\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\ninject.mockingkernel\tools\moq\NET35\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Ninject\net-3.5\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -77,6 +87,19 @@
     <Content Include="Cases\basic.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Extensions\ExtensionsForDictionaryTests.cs" />
+    <Compile Include="Extensions\ExtensionsForXElementTests.cs" />
+    <Compile Include="Processors\AttributeProcessorTestsBase.cs" />
+    <Compile Include="Processors\BindingBuilderFactoryTest.cs" />
+    <Compile Include="Processors\BindXmlElementProcessorTest.cs" />
+    <Compile Include="Processors\ChildElementProcessorTest.cs" />
+    <Compile Include="Processors\MetadataXmlElementProcessorTest.cs" />
+    <Compile Include="Processors\NameXmlAttributeProcessorTest.cs" />
+    <Compile Include="Processors\ProcessorTestsBase.cs" />
+    <Compile Include="Processors\ScopeXmlAttributeProcessorTests.cs" />
+    <Compile Include="Scopes\TransientScopeHandlerTest.cs" />
+    <Compile Include="Scopes\ThreadScopeHandlerTest.cs" />
+    <Compile Include="Scopes\SingletonScopeHandlerTest.cs" />
     <Compile Include="XmlModuleLoaderPluginTest.cs" />
     <Compile Include="Fakes\WeaponProvider.cs" />
     <Compile Include="Fakes\Shuriken.cs" />
@@ -116,6 +139,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Ninject.snk" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

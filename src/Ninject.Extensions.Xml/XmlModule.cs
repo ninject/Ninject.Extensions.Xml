@@ -1,18 +1,33 @@
-﻿// 
-// Author: Nate Kohari <nate@enkari.com>
-// Copyright (c) 2007-2009, Enkari, Ltd.
-// 
-// Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
-// See the file LICENSE.txt for details.
-// 
+﻿//-------------------------------------------------------------------------------
+// <copyright file="XmlModule.cs" company="Ninject Project Contributors">
+//   Copyright (c) 2007-2009, Enkari, Ltd.
+//   Copyright (c) 2009-2011 Ninject Project Contributors
+//   Authors: Nate Kohari (nate@enkari.com)
+//            Remo Gloor (remo.gloor@gmail.com)
+//           
+//   Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
+//   you may not use this file except in compliance with one of the Licenses.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//   or
+//       http://www.microsoft.com/opensource/licenses.mspx
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+//-------------------------------------------------------------------------------
 
 namespace Ninject.Extensions.Xml
 {
-    using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Xml.Linq;
-    using Ninject.Extensions.Xml.Handlers;
+
+    using Ninject.Extensions.Xml.Extensions;
+    using Ninject.Extensions.Xml.Processors;
     using Ninject.Modules;
 
     /// <summary>
@@ -26,36 +41,27 @@ namespace Ninject.Extensions.Xml
         private readonly string name;
 
         /// <summary>
+        /// The module xml element.
+        /// </summary>
+        private readonly XElement moduleElement;
+
+        /// <summary>
+        /// Gets the element processors.
+        /// </summary>
+        /// <value>The element processors.</value>
+        private readonly IDictionary<string, IModuleChildXmlElementProcessor> elementProcessors;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="XmlModule"/> class.
         /// </summary>
         /// <param name="moduleElement">The module xml element.</param>
-        /// <param name="elementHandlers">The element handlers.</param>
-        public XmlModule(XElement moduleElement, IDictionary<string, IXmlElementHandler> elementHandlers)
+        /// <param name="elementProcessors">The element processors.</param>
+        public XmlModule(XElement moduleElement, IDictionary<string, IModuleChildXmlElementProcessor> elementProcessors)
         {
-            this.ModuleElement = moduleElement;
-            this.ElementHandlers = elementHandlers;
-
-            XAttribute attribute = moduleElement.Attribute("name");
-
-            if (attribute == null)
-            {
-                throw new ConfigurationErrorsException("<module> element does not have a required 'name' attribute.");
-            }
-
-            this.name = attribute.Value;
+            this.moduleElement = moduleElement;
+            this.elementProcessors = elementProcessors;
+            this.name = moduleElement.RequiredAttribute("name").Value;
         }
-        
-        /// <summary>
-        /// Gets the module xml element.
-        /// </summary>
-        /// <value>The module xml element.</value>
-        public XElement ModuleElement { get; private set; }
-
-        /// <summary>
-        /// Gets the element handlers.
-        /// </summary>
-        /// <value>The element handlers.</value>
-        public IDictionary<string, IXmlElementHandler> ElementHandlers { get; private set; }
 
         /// <summary>
         /// Gets the module's name. Only a single module with a given name can be loaded at one time.
@@ -71,16 +77,10 @@ namespace Ninject.Extensions.Xml
         /// </summary>
         public override void Load()
         {
-            foreach (XElement child in this.ModuleElement.Elements())
+            foreach (var child in this.moduleElement.Elements())
             {
-                string moduleName = child.Name.LocalName;
-
-                if (!this.ElementHandlers.ContainsKey(moduleName))
-                {
-                    throw new ConfigurationErrorsException(String.Format("<module> element contains an unknown element type '{0}'.", moduleName));
-                }
-
-                this.ElementHandlers[moduleName].Handle(this, child);
+                var processor = this.elementProcessors.GetProcessor(child.Name.LocalName, "module");
+                processor.Handle(this, child);
             }
         }
     }

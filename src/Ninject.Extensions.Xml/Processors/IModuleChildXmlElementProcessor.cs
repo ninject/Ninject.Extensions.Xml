@@ -6,27 +6,23 @@
 // See the file LICENSE.txt for details.
 // 
 
-namespace Ninject.Extensions.Xml.Handlers
+namespace Ninject.Extensions.Xml.Processors
 {
     using System.Xml.Linq;
+
     using Ninject.Components;
+    using Ninject.Syntax;
 
     /// <summary>
-    /// Handler for XElements
+    /// Processor for XElements
     /// </summary>
-    public interface IXmlElementHandler : INinjectComponent
+    public interface IModuleChildXmlElementProcessor : IHaveXmlNodeName, INinjectComponent
     {
-        /// <summary>
-        /// Gets the name of the element that is handled by this handler.
-        /// </summary>
-        /// <value>The name of the element that is handled by this handler.</value>
-        string ElementName { get; }
-
         /// <summary>
         /// Handles the XElement.
         /// </summary>
         /// <param name="module">The module.</param>
         /// <param name="element">The element.</param>
-        void Handle(XmlModule module, XElement element);
+        void Handle(IBindingRoot module, XElement element);
     }
 }

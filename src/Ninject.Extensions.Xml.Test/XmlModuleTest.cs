@@ -1,25 +1,35 @@
 ﻿namespace Ninject.Extensions.Xml
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Xml.Linq;
 
     using FluentAssertions;
 
-    using Ninject.Extensions.Xml.Handlers;
     using Ninject.Extensions.Xml.Fakes;
+    using Ninject.Extensions.Xml.Processors;
     using Ninject.Planning.Bindings;
+
     using Xunit;
 
-    public class XmlModuleContext
+    public class XmlModuleContext : IDisposable
     {
         protected readonly IKernel kernel;
-        protected readonly IDictionary<string, IXmlElementHandler> elementHandlers;
+        protected readonly IDictionary<string, IModuleChildXmlElementProcessor> elementProcessors;
 
         public XmlModuleContext()
         {
-            kernel = new StandardKernel();
-            elementHandlers = new Dictionary<string, IXmlElementHandler> { { "bind", new BindElementHandler(kernel) } };
+            var settings = new NinjectSettings { LoadExtensions = false };
+            this.kernel = new StandardKernel(settings, new XmlExtensionModule());
+            this.elementProcessors = 
+                this.kernel.Components
+                    .GetAll<IModuleChildXmlElementProcessor>()
+                    .ToDictionary(p => p.XmlNodeName);
+        }
+
+        public void Dispose()
+        {
+            this.kernel.Dispose();
         }
     }
 
@@ -29,21 +39,20 @@
 
         public WhenLoadIsCalledForBasicModule()
         {
-            var document = XDocument.Load("Cases/basic.xml");
-            module = new XmlModule(document.Element("module"), elementHandlers);
-            module.OnLoad(kernel);
+            this.kernel.Load("Cases/basic.xml");
+            this.module = this.kernel.GetModules().OfType<XmlModule>().Single();
         }
-
+        
         [Fact]
         public void ModuleIsNamedAppropriately()
         {
-            module.Name.Should().Be("basicTest");
+            this.module.Name.Should().Be("basicTest");
         }
 
         [Fact]
         public void ModuleLoadsBindings()
         {
-            var bindings = module.Bindings.ToList();
+            var bindings = this.module.Bindings.ToList();
             bindings.Count.Should().Be(2);
 
             bindings[0].Service.Should().Be(typeof(IWeapon));
@@ -60,21 +69,20 @@
 
         public WhenLoadIsCalledForProviderModule()
         {
-            var document = XDocument.Load("Cases/provider.xml");
-            module = new XmlModule(document.Element("module"), elementHandlers);
-            module.OnLoad(kernel);
+            this.kernel.Load("Cases/provider.xml");
+            this.module = this.kernel.GetModules().OfType<XmlModule>().Single();
         }
 
         [Fact]
         public void ModuleIsNamedAppropriately()
         {
-            module.Name.Should().Be("providerTest");
+            this.module.Name.Should().Be("providerTest");
         }
 
         [Fact]
         public void ModuleLoadsBindings()
         {
-            var bindings = module.Bindings.ToList();
+            var bindings = this.module.Bindings.ToList();
             bindings.Count.Should().Be(1);
 
             bindings[0].Service.Should().Be(typeof(IWeapon));
@@ -88,15 +96,14 @@
 
         public WhenLoadIsCalledForModuleWithBindingMetadata()
         {
-            var document = XDocument.Load("Cases/metadata.xml");
-            module = new XmlModule(document.Element("module"), elementHandlers);
-            module.OnLoad(kernel);
+            this.kernel.Load("Cases/metadata.xml");
+            this.module = this.kernel.GetModules().OfType<XmlModule>().Single();
         }
 
         [Fact]
         public void ModuleLoadsBindingMetadata()
         {
-            var bindings = module.Bindings.ToList();
+            var bindings = this.module.Bindings.ToList();
             bindings.Count.Should().Be(2);
 
             bindings[0].Service.Should().Be(typeof(IWeapon));

@@ -42,7 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,9 +78,29 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\ExtensionsForDictionary.cs" />
     <Compile Include="Extensions\ExtensionsForXElement.cs" />
-    <Compile Include="Handlers\BindElementHandler.cs" />
-    <Compile Include="Handlers\IXmlElementHandler.cs" />
+    <Compile Include="Processors\AbstractXmlAttributeProcessor.cs" />
+    <Compile Include="Processors\AbstractXmlElementProcessor.cs" />
+    <Compile Include="Processors\BindingBuilderFactory.cs" />
+    <Compile Include="Processors\BindXmlElementProcessor.cs" />
+    <Compile Include="Processors\ChildElementProcessor.cs" />
+    <Compile Include="Processors\IBindingBuilderFactory.cs" />
+    <Compile Include="Processors\IChildElementProcessor.cs" />
+    <Compile Include="Processors\IHaveXmlNodeName.cs" />
+    <Compile Include="Processors\IModuleChildXmlElementProcessor.cs" />
+    <Compile Include="Processors\IOwnXmlNodeProcessor.cs" />
+    <Compile Include="Processors\IXmlAttributeProcessor.cs" />
+    <Compile Include="Processors\IXmlElementProcessor.cs" />
+    <Compile Include="Processors\IXmlNodeProcessor.cs" />
+    <Compile Include="Processors\MetadataXmlElementProcessor.cs" />
+    <Compile Include="Processors\NameXmlAttributeProcessor.cs" />
+    <Compile Include="Processors\ScopeXmlAttributeProcessor.cs" />
+    <Compile Include="Processors\Tags.cs" />
+    <Compile Include="Scopes\IScopeHandler.cs" />
+    <Compile Include="Scopes\SingletonScopeHandler.cs" />
+    <Compile Include="Scopes\ThreadScopeHandler.cs" />
+    <Compile Include="Scopes\TransientScopeHandler.cs" />
     <Compile Include="XmlExtensionModule.cs" />
     <Compile Include="XmlModule.cs" />
     <Compile Include="XmlModuleLoaderPlugin.cs" />
