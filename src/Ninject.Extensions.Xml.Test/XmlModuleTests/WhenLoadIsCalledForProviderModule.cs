@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IModuleChildXmlElementProcessor.cs" company="Ninject Project Contributors">
+// <copyright file="WhenLoadIsCalledForProviderModule.cs" company="Ninject Project Contributors">
 //   Copyright (c) 2007-2009, Enkari, Ltd.
 //   Copyright (c) 2009-2011 Ninject Project Contributors
 //   Authors: Nate Kohari (nate@enkari.com)
@@ -21,23 +21,38 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Xml.Processors
+namespace Ninject.Extensions.Xml.XmlModuleTests
 {
-    using System.Xml.Linq;
+    using System.Linq;
+    using FluentAssertions;
+    using Ninject.Extensions.Xml.Fakes;
+    using Ninject.Planning.Bindings;
+    using Xunit;
 
-    using Ninject.Components;
-    using Ninject.Syntax;
-
-    /// <summary>
-    /// Processor for XElements
-    /// </summary>
-    public interface IModuleChildXmlElementProcessor : IHaveXmlNodeName, INinjectComponent
+    public class WhenLoadIsCalledForProviderModule : XmlModuleContext
     {
-        /// <summary>
-        /// Handles the XElement.
-        /// </summary>
-        /// <param name="module">The module.</param>
-        /// <param name="element">The element.</param>
-        void Handle(IBindingRoot module, XElement element);
+        private readonly XmlModule module;
+
+        public WhenLoadIsCalledForProviderModule()
+        {
+            this.Kernel.Load("Cases/provider.xml");
+            this.module = this.Kernel.GetModules().OfType<XmlModule>().Single();
+        }
+
+        [Fact]
+        public void ModuleIsNamedAppropriately()
+        {
+            this.module.Name.Should().Be("providerTest");
+        }
+
+        [Fact]
+        public void ModuleLoadsBindings()
+        {
+            var bindings = this.module.Bindings.ToList();
+            bindings.Count.Should().Be(1);
+
+            bindings[0].Service.Should().Be(typeof(IWeapon));
+            bindings[0].Target.Should().Be(BindingTarget.Provider);
+        }
     }
 }

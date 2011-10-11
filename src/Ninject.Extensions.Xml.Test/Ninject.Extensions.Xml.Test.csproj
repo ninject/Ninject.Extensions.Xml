@@ -56,7 +56,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Ninject.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Ninject.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
@@ -100,12 +100,15 @@
     <Compile Include="Scopes\TransientScopeHandlerTest.cs" />
     <Compile Include="Scopes\ThreadScopeHandlerTest.cs" />
     <Compile Include="Scopes\SingletonScopeHandlerTest.cs" />
+    <Compile Include="XmlModuleTests\WhenLoadIsCalledForBasicModule.cs" />
     <Compile Include="XmlModuleLoaderPluginTest.cs" />
     <Compile Include="Fakes\WeaponProvider.cs" />
     <Compile Include="Fakes\Shuriken.cs" />
     <Compile Include="Fakes\Sword.cs" />
     <Compile Include="Fakes\IWeapon.cs" />
-    <Compile Include="XmlModuleTest.cs" />
+    <Compile Include="XmlModuleTests\WhenLoadIsCalledForModuleWithBindingMetadata.cs" />
+    <Compile Include="XmlModuleTests\WhenLoadIsCalledForProviderModule.cs" />
+    <Compile Include="XmlModuleTests\XmlModuleContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

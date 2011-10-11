@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IModuleChildXmlElementProcessor.cs" company="Ninject Project Contributors">
+// <copyright file="XmlModuleContext.cs" company="Ninject Project Contributors">
 //   Copyright (c) 2007-2009, Enkari, Ltd.
 //   Copyright (c) 2009-2011 Ninject Project Contributors
 //   Authors: Nate Kohari (nate@enkari.com)
@@ -21,23 +21,25 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.Xml.Processors
+namespace Ninject.Extensions.Xml.XmlModuleTests
 {
-    using System.Xml.Linq;
+    using System;
+    using System.Collections.Generic;
+    using Ninject.Extensions.Xml.Processors;
 
-    using Ninject.Components;
-    using Ninject.Syntax;
-
-    /// <summary>
-    /// Processor for XElements
-    /// </summary>
-    public interface IModuleChildXmlElementProcessor : IHaveXmlNodeName, INinjectComponent
+    public class XmlModuleContext : IDisposable
     {
-        /// <summary>
-        /// Handles the XElement.
-        /// </summary>
-        /// <param name="module">The module.</param>
-        /// <param name="element">The element.</param>
-        void Handle(IBindingRoot module, XElement element);
+        public XmlModuleContext()
+        {
+            var settings = new NinjectSettings { LoadExtensions = false };
+            this.Kernel = new StandardKernel(settings, new XmlExtensionModule());
+        }
+
+        protected IKernel Kernel { get; private set; }
+
+        public void Dispose()
+        {
+            this.Kernel.Dispose();
+        }
     }
 }

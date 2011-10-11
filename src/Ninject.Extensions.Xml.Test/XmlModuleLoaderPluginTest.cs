@@ -33,7 +33,7 @@ namespace Ninject.Extensions.Xml
     {
         public class WhenLoadIsCalled : IDisposable
         {
-            protected readonly IKernel kernel;
+            private readonly IKernel kernel;
 
             public WhenLoadIsCalled()
             {

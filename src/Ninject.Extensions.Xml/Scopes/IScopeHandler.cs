@@ -25,7 +25,7 @@ namespace Ninject.Extensions.Xml.Scopes
     using Ninject.Syntax;
 
     /// <summary>
-    /// Processor fo a specific scope type.
+    /// Processor for a specific scope type.
     /// </summary>
     public interface IScopeHandler : INinjectComponent
     {

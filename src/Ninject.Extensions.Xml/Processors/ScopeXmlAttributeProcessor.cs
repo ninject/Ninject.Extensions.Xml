@@ -56,6 +56,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="value">The value of the attribute.</param>
         /// <param name="owner">The owner of this instance.</param>
         /// <param name="syntax">The binding syntax.</param>
+        /// <exception cref="ConfigurationErrorsException">An unknown scope value was found.</exception>
         public override void Process(
             string value, 
             IOwnXmlNodeProcessor owner, 

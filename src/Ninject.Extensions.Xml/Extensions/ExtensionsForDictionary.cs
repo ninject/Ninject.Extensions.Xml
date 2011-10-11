@@ -37,7 +37,7 @@ namespace Ninject.Extensions.Xml.Extensions
         /// <param name="elementName">Name of the element.</param>
         /// <param name="parentElementName">Name of the parent element.</param>
         /// <returns>The processor for the specified element.</returns>
-        /// <exception cref="ConfigurationErrorsException">Thrown in case there is no processor for the specidied element.</exception>
+        /// <exception cref="ConfigurationErrorsException">Thrown in case there is no processor for the specified element.</exception>
         public static TProcessor GetProcessor<TProcessor>(this IDictionary<string, TProcessor> dictionary, string elementName, string parentElementName)
         {
             TProcessor processor;

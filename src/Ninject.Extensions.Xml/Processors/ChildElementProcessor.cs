@@ -79,6 +79,12 @@ namespace Ninject.Extensions.Xml.Processors
             this.ProcessAttributes(element, syntax, Enumerable.Empty<string>());
         }
 
+        /// <summary>
+        /// Processes the attributes of the given element.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="syntax">The syntax.</param>
+        /// <param name="excludedAttributes">The attributes that are excluded.</param>
         public void ProcessAttributes(XElement element, IBindingSyntax<object> syntax, IEnumerable<string> excludedAttributes)
         {
             var requiredAttributeProcessors = this.attributeProcessors.Values.Where(processor => processor.Required).ToList();
@@ -115,6 +121,10 @@ namespace Ninject.Extensions.Xml.Processors
             }
         }
 
+        /// <summary>
+        /// Sets the owner.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
         public void SetOwner(IOwnXmlNodeProcessor owner)
         {
             this.owner = owner;

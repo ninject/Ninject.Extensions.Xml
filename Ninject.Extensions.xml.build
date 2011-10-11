@@ -61,6 +61,7 @@
 				<include name="System.Core.dll"/>
 				<include name="System.Xml.dll"/>
 				<include name="System.Xml.Linq.dll"/>
+				<include name="System.Configuration.dll"/>
 				<include name="Moq.dll"/>
 				<include name="xunit.dll"/>
 				<include name="FluentAssertions.dll"/>

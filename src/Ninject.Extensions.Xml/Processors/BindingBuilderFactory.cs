@@ -1,4 +1,25 @@
-﻿namespace Ninject.Extensions.Xml.Processors
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BindingBuilderFactory.cs" company="Ninject Project Contributors">
+//   Copyright (c) 2009-2011 Ninject Project Contributors
+//   Authors: Remo Gloor (remo.gloor@gmail.com)
+//           
+//   Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
+//   you may not use this file except in compliance with one of the Licenses.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//   or
+//       http://www.microsoft.com/opensource/licenses.mspx
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Ninject.Extensions.Xml.Processors
 {
     using System;
     using System.Configuration;
@@ -10,14 +31,25 @@
     using Ninject.Planning.Bindings;
     using Ninject.Syntax;
 
+    /// <summary>
+    /// Factory for the binding builder.
+    /// </summary>
     public class BindingBuilderFactory : NinjectComponent, IBindingBuilderFactory
     {
+        /// <summary>
+        /// Creates a new binding builder and returns its binding syntax.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="module">The module.</param>
+        /// <returns>
+        /// The binding syntax of the created binding builder.
+        /// </returns>
         public IBindingSyntax<object> Create(XElement element, IBindingRoot module)
         {
             XAttribute serviceAttribute = element.RequiredAttribute("service");
             Type service = GetTypeFromAttributeValue(serviceAttribute);
 
-            this.VerifyElementHasExactlyOneToAttribute(element);
+            VerifyElementHasExactlyOneToAttribute(element);
 
             var bindToSyntax = module.Bind(service);
             var syntax = HandleToAttribute(element, bindToSyntax) ?? HandleToProviderAttribute(element, bindToSyntax);
@@ -82,7 +114,12 @@
             return service;
         }
 
-        private void VerifyElementHasExactlyOneToAttribute(XElement element)
+        /// <summary>
+        /// Verifies that the specified element has exactly one "to" attribute.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <exception cref="ConfigurationErrorsException">The 'bind' element does not define either a 'to' or 'toProvider' attribute or it specifies both at the same time.</exception>
+        private static void VerifyElementHasExactlyOneToAttribute(XElement element)
         {
             int toAttributeCount = element.Attributes().Where(a => a.Name == "to" | a.Name == "toProvider").Count();
             if (toAttributeCount == 0)

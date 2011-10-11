@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="TransientScopeProcessor.cs" company="Ninject Project Contributors">
+// <copyright file="TransientScopeHandler.cs" company="Ninject Project Contributors">
 //   Copyright (c) 2009-2011 Ninject Project Contributors
 //   Authors: Remo Gloor (remo.gloor@gmail.com)
 //           
@@ -30,7 +30,7 @@ namespace Ninject.Extensions.Xml.Scopes
     public class TransientScopeHandler : NinjectComponent, IScopeHandler
     {
         /// <summary>
-        /// The idetification name of the transient scope.
+        /// The identification name of the transient scope.
         /// </summary>
         public const string Name = "transient";
 

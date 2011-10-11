@@ -29,7 +29,7 @@ namespace Ninject.Extensions.Xml.Processors
     using Ninject.Planning.Bindings;
 
     /// <summary>
-    /// Apstract base implementation for element processors
+    /// Abstract base implementation for element processors
     /// </summary>
     public abstract class AbstractXmlElementProcessor : NinjectComponent, IXmlElementProcessor, IOwnXmlNodeProcessor
     {
@@ -43,7 +43,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// </summary>
         /// <param name="elementName">The name of the element processed by this instance.</param>
         /// <param name="tags">The tags of this element used to decide which processor apply as its children.</param>
-        /// <param name="ownerTag">The tag that the oner must have inorder to apply as child processor.</param>
+        /// <param name="ownerTag">The tag that the oner must have in order to apply as child processor.</param>
         protected AbstractXmlElementProcessor(string elementName, IEnumerable<string> tags, string ownerTag)
         {
             this.ownerTag = ownerTag;

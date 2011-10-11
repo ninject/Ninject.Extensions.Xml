@@ -1,10 +1,25 @@
-﻿// 
-// Author: Nate Kohari <nate@enkari.com>
-// Copyright (c) 2007-2009, Enkari, Ltd.
-// 
-// Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
-// See the file LICENSE.txt for details.
-// 
+﻿//-------------------------------------------------------------------------------
+// <copyright file="BindXmlElementProcessor.cs" company="Ninject Project Contributors">
+//   Copyright (c) 2007-2009, Enkari, Ltd.
+//   Copyright (c) 2009-2011 Ninject Project Contributors
+//   Authors: Nate Kohari (nate@enkari.com)
+//            Remo Gloor (remo.gloor@gmail.com)
+//           
+//   Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
+//   you may not use this file except in compliance with one of the Licenses.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//   or
+//       http://www.microsoft.com/opensource/licenses.mspx
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+//------------------------------------------------------------------------------- 
 
 namespace Ninject.Extensions.Xml.Processors
 {
@@ -19,7 +34,6 @@ namespace Ninject.Extensions.Xml.Processors
     /// </summary>
     public class BindXmlElementProcessor : NinjectComponent, IOwnXmlNodeProcessor, IModuleChildXmlElementProcessor
     {
-        private readonly IKernel kernel;
         private readonly IBindingBuilderFactory bindingBuilderFactory;
         private readonly IChildElementProcessor childElementProcessor;
         private readonly string[] excludedAttributes;
@@ -27,16 +41,12 @@ namespace Ninject.Extensions.Xml.Processors
         /// <summary>
         /// Initializes a new instance of the <see cref="BindXmlElementProcessor"/> class.
         /// </summary>
-        /// <param name="kernel">The ninject kernel.</param>
         /// <param name="bindingBuilderFactory">The binding builder factory.</param>
-        /// <param name="elementProcessors">The element processors.</param>
-        /// <param name="attributeProcessors">The attribute processors.</param>
+        /// <param name="childElementProcessor">The child element processor.</param>
         public BindXmlElementProcessor(
-            IKernel kernel,
             IBindingBuilderFactory bindingBuilderFactory,
             IChildElementProcessor childElementProcessor)
         {
-            this.kernel = kernel;
             this.bindingBuilderFactory = bindingBuilderFactory;
             this.ElementTags = new[] { Tags.Binding, Tags.HasCondition, Tags.HasMetadata, Tags.HasName, Tags.HasScope };
             this.excludedAttributes = new[] { "service", "to", "toProvider" };
