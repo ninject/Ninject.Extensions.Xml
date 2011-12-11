@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_GENERIC_MOQ && !NO_MOQ
 namespace Ninject.Extensions.Xml.Processors
 {
     using System.Configuration;
@@ -80,10 +81,11 @@ namespace Ninject.Extensions.Xml.Processors
 
             exception.Message.Should().Be("The 'metadata' element does not have the required attribute 'value'.");
         }
-        
+
         protected override MetadataXmlElementProcessor CreateTestee()
         {
             return new MetadataXmlElementProcessor();
         }
     }
 }
+#endif

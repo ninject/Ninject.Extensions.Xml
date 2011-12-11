@@ -23,6 +23,6 @@
 
 using System.Security;
 
-#if !NETCF && !NO_PARTIAL_TRUST
+#if !NO_PARTIAL_TRUST
 [assembly: AllowPartiallyTrustedCallers]
 #endif

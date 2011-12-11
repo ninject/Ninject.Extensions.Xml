@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_MOQ
 namespace Ninject.Extensions.Xml.Scopes
 {
     using FluentAssertions;
@@ -47,6 +48,7 @@ namespace Ninject.Extensions.Xml.Scopes
             this.testee.ScopeName.Should().Be(TransientScopeHandler.Name);
         }
 
+#if !NO_GENERIC_MOQ
         [Fact]
         public void SetScopeSetsTheSingletonScopeOnTheSyntax()
         {
@@ -56,5 +58,7 @@ namespace Ninject.Extensions.Xml.Scopes
 
             syntaxMock.Verify(s => s.InTransientScope());
         }
+#endif
     }
 }
+#endif

@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_GENERIC_MOQ && !NO_MOQ
 namespace Ninject.Extensions.Xml.Processors
 {
     using Xunit;
@@ -48,3 +49,4 @@ namespace Ninject.Extensions.Xml.Processors
         }
     }
 }
+#endif

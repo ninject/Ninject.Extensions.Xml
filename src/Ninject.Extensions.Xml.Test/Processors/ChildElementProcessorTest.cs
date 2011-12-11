@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_GENERIC_MOQ && !NO_MOQ 
 namespace Ninject.Extensions.Xml.Processors
 {
     using System;
@@ -303,3 +304,4 @@ namespace Ninject.Extensions.Xml.Processors
         }
     }
 }
+#endif

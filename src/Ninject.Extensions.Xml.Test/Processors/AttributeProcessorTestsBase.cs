@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_MOQ
 namespace Ninject.Extensions.Xml.Processors
 {
     using FluentAssertions;
@@ -43,3 +44,4 @@ namespace Ninject.Extensions.Xml.Processors
         }
     }
 }
+#endif

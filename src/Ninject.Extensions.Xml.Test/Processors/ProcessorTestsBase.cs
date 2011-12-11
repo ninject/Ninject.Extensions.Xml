@@ -19,16 +19,13 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_MOQ
 namespace Ninject.Extensions.Xml.Processors
 {
     using System.Collections.Generic;
-
     using FluentAssertions;
-
     using Moq;
-
     using Ninject.Planning.Bindings;
-
     using Xunit;
 
     public abstract class ProcessorTestsBase<TTestee>
@@ -82,7 +79,7 @@ namespace Ninject.Extensions.Xml.Processors
         {
             return CreateOwnerMock("owner").Object;
         }
-        
+
         protected static Mock<IOwnXmlNodeProcessor> CreateOwnerMock(string name, params string[] tags)
         {
             var ownerMock = new Mock<IOwnXmlNodeProcessor>();
@@ -91,11 +88,14 @@ namespace Ninject.Extensions.Xml.Processors
             return ownerMock;
         }
 
+#if !NO_GENERIC_MOQ
         protected static Mock<IBindingSyntax<object>> CreateBindingSyntaxMock()
         {
             return new Mock<IBindingSyntax<object>>();
         }
+#endif
 
         protected abstract TTestee CreateTestee();
     }
 }
+#endif

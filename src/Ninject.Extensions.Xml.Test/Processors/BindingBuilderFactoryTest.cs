@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_GENERIC_MOQ && !NO_MOQ 
 namespace Ninject.Extensions.Xml.Processors
 {
     using System;
@@ -153,7 +154,7 @@ namespace Ninject.Extensions.Xml.Processors
             createAction.ShouldThrow<ConfigurationErrorsException>()
                 .WithMessage("Couldn't resolve type 'UnknownType, Ninject.Extensions.Xml.Test' defined in 'toProvider' attribute.");
         }
-        
+
         private static Mock<IBindingRoot> CreateBindingRootMock(Mock<IBindingToSyntax<object>> bindToSyntaxMock)
         {
             var bindingRootMock = new Mock<IBindingRoot>();
@@ -185,3 +186,4 @@ namespace Ninject.Extensions.Xml.Processors
         }
     }
 }
+#endif

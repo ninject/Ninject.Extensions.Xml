@@ -19,6 +19,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_MOQ 
 namespace Ninject.Extensions.Xml.Processors
 {
     using System.Xml.Linq;
@@ -64,6 +65,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.XmlNodeName.Should().Be("bind");
         }
 
+#if !NO_GENERIC_MOQ
         [Fact]
         public void HandleCreatesBindingAndProcessesChildElements()
         {
@@ -80,5 +82,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.childElementProcessorMock.Verify(
                 childElementProcessor => childElementProcessor.ProcessChildElements(element, bindingBuilder));            
         }
+#endif
     }
 }
+#endif
