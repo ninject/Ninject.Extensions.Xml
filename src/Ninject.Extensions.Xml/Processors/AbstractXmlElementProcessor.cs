@@ -85,7 +85,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="bindingSyntax">The binding syntax.</param>
         public abstract void Process(
             XElement element, 
-            IOwnXmlNodeProcessor owner, 
-            IBindingSyntax<object> bindingSyntax);
+            IOwnXmlNodeProcessor owner,
+            IBindingConfigurationSyntax<object> bindingSyntax);
     }
 }

@@ -38,6 +38,6 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="element">The element.</param>
         /// <param name="module">The module.</param>
         /// <returns>The binding syntax of the created binding builder.</returns>
-        IBindingSyntax<object> Create(XElement element, IBindingRoot module);
+        IBindingConfigurationSyntax<object> Create(XElement element, IBindingRoot module);
     }
 }

@@ -58,7 +58,7 @@ namespace Ninject.Extensions.Xml.Processors
         [Fact]
         public void IfScopeIsUnknownThenConfigurationErrorsExceptionIsThrown()
         {
-            var syntax = new Mock<IBindingSyntax<object>>().Object;
+            var syntax = new Mock<IBindingConfigurationSyntax<object>>().Object;
             var ownerMock = CreateOwnerMock("owner");
 
             var testee = CreateTestee(CreateScopeHandler("SomeScope"), CreateScopeHandler("AnotherScope"));

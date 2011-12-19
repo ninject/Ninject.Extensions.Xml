@@ -41,6 +41,6 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="value">The value of the attribute.</param>
         /// <param name="owner">The owner of this instance.</param>
         /// <param name="syntax">The binding syntax.</param>
-        void Process(string value, IOwnXmlNodeProcessor owner, IBindingSyntax<object> syntax);
+        void Process(string value, IOwnXmlNodeProcessor owner, IBindingConfigurationSyntax<object> syntax);
     }
 }

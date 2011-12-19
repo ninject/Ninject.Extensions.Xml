@@ -47,7 +47,7 @@ namespace Ninject.Extensions.Xml.Processors
         {
             var bindToSyntaxMock = new Mock<IBindingToSyntax<object>>();
             var bindingRootMock = CreateBindingRootMock(bindToSyntaxMock);
-            var bindingSyntax = new Mock<IBindingSyntax<object>>().Object;
+            var bindingSyntax = new Mock<IBindingConfigurationSyntax<object>>().Object;
             var bindingElement = CreateBindToXmlElement(
                 "Ninject.Extensions.Xml.Fakes.IWeapon, Ninject.Extensions.Xml.Test",
                 "Ninject.Extensions.Xml.Fakes.Sword, Ninject.Extensions.Xml.Test");
@@ -64,7 +64,7 @@ namespace Ninject.Extensions.Xml.Processors
         {
             var bindToSyntaxMock = new Mock<IBindingToSyntax<object>>();
             var bindingRootMock = CreateBindingRootMock(bindToSyntaxMock);
-            var bindingSyntax = new Mock<IBindingSyntax<object>>().Object;
+            var bindingSyntax = new Mock<IBindingConfigurationSyntax<object>>().Object;
             var bindingElement = CreateBindToProviderXmlElement(
                 "Ninject.Extensions.Xml.Fakes.IWeapon, Ninject.Extensions.Xml.Test",
                 "Ninject.Extensions.Xml.Fakes.Sword, Ninject.Extensions.Xml.Test");

@@ -45,7 +45,7 @@ namespace Ninject.Extensions.Xml.Processors
         public override void Process(
             string value, 
             IOwnXmlNodeProcessor owner,
-            IBindingSyntax<object> syntax)
+            IBindingConfigurationSyntax<object> syntax)
         {
             syntax.Named(value);
         }

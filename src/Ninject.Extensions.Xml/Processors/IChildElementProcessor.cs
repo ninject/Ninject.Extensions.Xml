@@ -39,7 +39,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="syntax">The binding syntax.</param>
         void ProcessAttributes(
             XElement element,
-            IBindingSyntax<object> syntax);
+            IBindingConfigurationSyntax<object> syntax);
 
         /// <summary>
         /// Processes the attributes of the given element.
@@ -47,7 +47,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="element">The element.</param>
         /// <param name="syntax">The syntax.</param>
         /// <param name="excludedAttributes">The attributes that are excluded.</param>
-        void ProcessAttributes(XElement element, IBindingSyntax<object> syntax, IEnumerable<string> excludedAttributes);
+        void ProcessAttributes(XElement element, IBindingConfigurationSyntax<object> syntax, IEnumerable<string> excludedAttributes);
 
         /// <summary>
         /// Processes the child elements.
@@ -56,7 +56,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="syntax">The syntax.</param>
         void ProcessChildElements(
             XElement element,
-            IBindingSyntax<object> syntax);
+            IBindingConfigurationSyntax<object> syntax);
 
         /// <summary>
         /// Sets the owner.

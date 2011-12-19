@@ -74,7 +74,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="syntax">The binding syntax.</param>
         public void ProcessAttributes(
             XElement element,
-            IBindingSyntax<object> syntax)
+            IBindingConfigurationSyntax<object> syntax)
         {
             this.ProcessAttributes(element, syntax, Enumerable.Empty<string>());
         }
@@ -85,7 +85,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="element">The element.</param>
         /// <param name="syntax">The syntax.</param>
         /// <param name="excludedAttributes">The attributes that are excluded.</param>
-        public void ProcessAttributes(XElement element, IBindingSyntax<object> syntax, IEnumerable<string> excludedAttributes)
+        public void ProcessAttributes(XElement element, IBindingConfigurationSyntax<object> syntax, IEnumerable<string> excludedAttributes)
         {
             var requiredAttributeProcessors = this.attributeProcessors.Values.Where(processor => processor.Required).ToList();
             foreach (var attribute in element.Attributes().Where(a => !excludedAttributes.Contains(a.Name.LocalName)))
@@ -112,7 +112,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="syntax">The syntax.</param>
         public void ProcessChildElements(
             XElement element,
-            IBindingSyntax<object> syntax)
+            IBindingConfigurationSyntax<object> syntax)
         {
             foreach (var childElement in element.Elements())
             {

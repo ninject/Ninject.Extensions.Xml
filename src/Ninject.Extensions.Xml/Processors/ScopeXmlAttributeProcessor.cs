@@ -59,8 +59,8 @@ namespace Ninject.Extensions.Xml.Processors
         /// <exception cref="ConfigurationErrorsException">An unknown scope value was found.</exception>
         public override void Process(
             string value, 
-            IOwnXmlNodeProcessor owner, 
-            IBindingSyntax<object> syntax)
+            IOwnXmlNodeProcessor owner,
+            IBindingConfigurationSyntax<object> syntax)
         {
             IScopeHandler scopeHandler;
             if (this.scopeHandlers.TryGetValue(value, out scopeHandler))

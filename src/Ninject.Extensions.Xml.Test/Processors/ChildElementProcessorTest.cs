@@ -38,14 +38,14 @@ namespace Ninject.Extensions.Xml.Processors
         private readonly List<IXmlElementProcessor> elementProcessors = new List<IXmlElementProcessor>();
         private readonly ChildElementProcessor testee;
 
-        private readonly IBindingSyntax<object> syntax;
+        private readonly IBindingConfigurationSyntax<object> syntax;
         private readonly XElement element;
         private readonly Mock<IOwnXmlNodeProcessor> ownerMock;
 
         public ChildElementProcessorTest()
         {
             this.testee = new ChildElementProcessor(this.elementProcessors, this.attributeProcessors);
-            this.syntax = new Mock<IBindingSyntax<object>>().Object;
+            this.syntax = new Mock<IBindingConfigurationSyntax<object>>().Object;
             this.element = new XElement("bind");
             this.ownerMock = CreateOwnerMock("bind");
         }
@@ -171,7 +171,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.ProcessAttributes(this.element, this.syntax, new[] { "from" });
 
             GetProcessorMockForTag(processors, "from")
-                .Verify(p => p.Process(It.IsAny<string>(), It.IsAny<IOwnXmlNodeProcessor>(), It.IsAny<IBindingSyntax<object>>()), Times.Never());
+                .Verify(p => p.Process(It.IsAny<string>(), It.IsAny<IOwnXmlNodeProcessor>(), It.IsAny<IBindingConfigurationSyntax<object>>()), Times.Never());
         }
 
         private static void SetProcessorToNotRequired(IEnumerable<AttributeProcessorData> processors, string tag)

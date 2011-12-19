@@ -89,9 +89,9 @@ namespace Ninject.Extensions.Xml.Processors
         }
 
 #if !NO_GENERIC_MOQ
-        protected static Mock<IBindingSyntax<object>> CreateBindingSyntaxMock()
+        protected static Mock<IBindingConfigurationSyntax<object>> CreateBindingSyntaxMock()
         {
-            return new Mock<IBindingSyntax<object>>();
+            return new Mock<IBindingConfigurationSyntax<object>>();
         }
 #endif
 

@@ -44,7 +44,7 @@ namespace Ninject.Extensions.Xml.Processors
         /// <returns>
         /// The binding syntax of the created binding builder.
         /// </returns>
-        public IBindingSyntax<object> Create(XElement element, IBindingRoot module)
+        public IBindingConfigurationSyntax<object> Create(XElement element, IBindingRoot module)
         {
             XAttribute serviceAttribute = element.RequiredAttribute("service");
             Type service = GetTypeFromAttributeValue(serviceAttribute);
@@ -54,7 +54,7 @@ namespace Ninject.Extensions.Xml.Processors
             var bindToSyntax = module.Bind(service);
             var syntax = HandleToAttribute(element, bindToSyntax) ?? HandleToProviderAttribute(element, bindToSyntax);
 
-            return (IBindingSyntax<object>)syntax;
+            return (IBindingConfigurationSyntax<object>)syntax;
         }
 
         /// <summary>

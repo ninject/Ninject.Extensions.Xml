@@ -84,6 +84,6 @@ namespace Ninject.Extensions.Xml.Processors
         public abstract void Process(
             string value, 
             IOwnXmlNodeProcessor owner, 
-            IBindingSyntax<object> syntax);
+            IBindingConfigurationSyntax<object> syntax);
     }
 }

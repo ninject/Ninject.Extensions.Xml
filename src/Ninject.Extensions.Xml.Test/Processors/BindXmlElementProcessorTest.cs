@@ -71,7 +71,7 @@ namespace Ninject.Extensions.Xml.Processors
         {
             var module = new Mock<IBindingRoot>().Object;
             var element = new XElement("test");
-            var bindingBuilder = new Mock<IBindingSyntax<object>>().Object;
+            var bindingBuilder = new Mock<IBindingConfigurationSyntax<object>>().Object;
             
             this.bindingBuilerFactoryMock.Setup(f => f.Create(element, module)).Returns(bindingBuilder);
 

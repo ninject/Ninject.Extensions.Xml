@@ -47,8 +47,8 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="syntax">The binding syntax.</param>
         public override void Process(
             XElement element, 
-            IOwnXmlNodeProcessor owner, 
-            IBindingSyntax<object> syntax)
+            IOwnXmlNodeProcessor owner,
+            IBindingConfigurationSyntax<object> syntax)
         {
             XAttribute keyAttribute = element.RequiredAttribute("key");
             XAttribute valueAttribute = element.RequiredAttribute("value");
