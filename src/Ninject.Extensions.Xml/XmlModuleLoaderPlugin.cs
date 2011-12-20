@@ -37,7 +37,7 @@ namespace Ninject.Extensions.Xml
         /// <summary>
         /// The extensions processed by this module loader.
         /// </summary>
-        private static readonly string[] Extensions = new[] { ".xml" };
+        private static readonly string[] Extensions = new[] { ".xml", ".config" };
 
         /// <summary>
         /// The ninject kernel.
