@@ -1,3 +1,5 @@
-Version 2.4.0.0
+Version 3.0.0.0
 ---------------
-Removed: No web builds. All builds are have not reference to web anymore
+- Removed: No web builds. All builds are have not reference to System.Web anymore
+
+- NOTE: InRequestscope is currently not supported anymore until Web.Common adds support for xml configuration. 
