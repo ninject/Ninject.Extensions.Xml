@@ -21,7 +21,10 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+using System.Reflection;
 using System.Security;
+
+[assembly: AssemblyDescription("Xml-based module loader for Ninject.")]
 
 #if !NO_PARTIAL_TRUST
 [assembly: AllowPartiallyTrustedCallers]
