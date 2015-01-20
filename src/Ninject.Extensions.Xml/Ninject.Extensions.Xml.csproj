@@ -79,6 +79,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\NinjectSectionHandler.cs" />
+    <Compile Include="Extensions\ExtensionsForKernel.cs" />
     <Compile Include="Extensions\ExtensionsForDictionary.cs" />
     <Compile Include="Extensions\ExtensionsForXElement.cs" />
     <Compile Include="Processors\AbstractXmlAttributeProcessor.cs" />
