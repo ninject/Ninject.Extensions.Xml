@@ -26,6 +26,7 @@ using System.Configuration;
 using System.Linq;
 using System.Xml.Linq;
 using Ninject.Extensions.Xml;
+using Ninject.Extensions.Xml.Configuration;
 using Ninject.Extensions.Xml.Processors;
 using Ninject.Modules;
 
@@ -43,8 +44,8 @@ namespace Ninject
         /// <param name="sectionName">Application Configuration File section name with modules definition.</param>
         public static void LoadFromConfiguration(this IKernel kernel, string sectionName)
         {
-            var ninjectSection = (XDocument)ConfigurationManager.GetSection(sectionName);
-            var modules = GetModules(kernel, ninjectSection);
+            var ninjectSection = (NinjectSectionHandler)ConfigurationManager.GetSection(sectionName);
+            var modules = GetModules(kernel, ninjectSection.NinjectModules);
             kernel.Load(modules);
         }
 

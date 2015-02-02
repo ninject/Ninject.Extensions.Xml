@@ -30,19 +30,25 @@ namespace Ninject.Extensions.Xml.Configuration
     /// <summary>
     /// Handles configuration sections that contains Ninject modules definition.
     /// </summary>
-    public class NinjectSectionHandler : IConfigurationSectionHandler
+    public class NinjectSectionHandler : ConfigurationSection
     {
         /// <summary>
-        /// Creates a configuration section handler.
+        /// Ninject modules configuration.
         /// </summary>
-        /// <param name="parent">Parent object.</param>
-        /// <param name="configContext">Configuration context object.</param>
-        /// <param name="section">Section XML node.</param>
-        /// <returns>XDocument representing NInject modules.</returns>
-        public object Create(object parent, object configContext, XmlNode section)
+        public XDocument NinjectModules
         {
-            var reader = new XmlNodeReader(section);
-            return XDocument.Load(reader);
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Reads XML from the configuration file.
+        /// </summary>
+        /// <param name="reader">The XmlReader that reads from the configuration file.</param>
+        /// <param name="serializeCollectionKey">true to serialize only the collection key properties; otherwise, false.</param>
+        protected override void DeserializeElement(XmlReader reader, bool serializeCollectionKey)
+        {
+            NinjectModules = XDocument.Load(reader);
         }
     }
 }
