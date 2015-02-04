@@ -37,14 +37,21 @@ namespace Ninject
     /// </summary>
     public static class ExtensionsForKernel
     {
+        private const string SectionName = "ninject";
+
         /// <summary>
         /// Load Ninject modules from Application Configuration File.
         /// </summary>
         /// <param name="kernel">Ninject kernel.</param>
-        /// <param name="sectionName">Application Configuration File section name with modules definition.</param>
-        public static void LoadFromConfiguration(this IKernel kernel, string sectionName)
+        public static void LoadFromConfiguration(this IKernel kernel)
         {
-            var ninjectSection = (NinjectSectionHandler)ConfigurationManager.GetSection(sectionName);
+            var ninjectSection = (NinjectSectionHandler)ConfigurationManager.GetSection(SectionName);
+            if (ninjectSection == null)
+            {
+                var error = string.Format("{0} configuration section is not found.", SectionName);
+                throw new ConfigurationErrorsException(error);
+            }
+
             var modules = GetModules(kernel, ninjectSection.NinjectModules);
             kernel.Load(modules);
         }
