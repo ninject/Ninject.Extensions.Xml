@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Extensions.Xml", "Ninject.Extensions.Xml\Ninject.Extensions.Xml.csproj", "{4F3C09EF-016E-4B05-AB74-42214C8AAEA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Extensions.Xml", "src\Ninject.Extensions.Xml\Ninject.Extensions.Xml.csproj", "{4F3C09EF-016E-4B05-AB74-42214C8AAEA2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Extensions.Xml.Test", "Ninject.Extensions.Xml.Test\Ninject.Extensions.Xml.Test.csproj", "{491EF6DE-86C0-40CE-962F-3B4D097A1730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Extensions.Xml.Test", "src\Ninject.Extensions.Xml.Test\Ninject.Extensions.Xml.Test.csproj", "{491EF6DE-86C0-40CE-962F-3B4D097A1730}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F364531E-6046-4E01-A5CE-8F5D91DD6875}"
 	ProjectSection(SolutionItems) = preProject
-		..\appveyor.yml = ..\appveyor.yml
-		..\CHANGELOG.md = ..\CHANGELOG.md
-		..\README.md = ..\README.md
+		appveyor.yml = appveyor.yml
+		CHANGELOG.md = CHANGELOG.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
