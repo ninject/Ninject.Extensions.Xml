@@ -23,7 +23,6 @@
 namespace Ninject.Extensions.Xml.Processors
 {
     using System;
-    using System.Configuration;
     using System.Xml;
     using System.Xml.Linq;
     using FluentAssertions;
@@ -84,7 +83,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             Action createAction = () => this.testee.Create(bindingElement, bindingRootMock.Object);
 
-            createAction.ShouldThrow<ConfigurationErrorsException>()
+            createAction.ShouldThrow<XmlException>()
                 .WithMessage("The 'bind' element does not have the required attribute 'service'.");
         }
 
@@ -96,7 +95,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             Action createAction = () => this.testee.Create(bindingElement, bindingRootMock.Object);
 
-            createAction.ShouldThrow<ConfigurationErrorsException>()
+            createAction.ShouldThrow<XmlException>()
                 .WithMessage("Couldn't resolve type 'UnknownType, Ninject.Extensions.Xml.Test' defined in 'service' attribute.");
         }
         
@@ -108,7 +107,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             Action createAction = () => this.testee.Create(bindingElement, bindingRootMock.Object);
 
-            createAction.ShouldThrow<ConfigurationErrorsException>()
+            createAction.ShouldThrow<XmlException>()
                 .WithMessage("The 'bind' element does not define either a 'to' or 'toProvider' attribute.");
         }
 
@@ -123,7 +122,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             Action createAction = () => this.testee.Create(bindingElement, bindingRootMock.Object);
 
-            createAction.ShouldThrow<ConfigurationErrorsException>()
+            createAction.ShouldThrow<XmlException>()
                 .WithMessage("The 'bind' element has both a 'to' and a 'toProvider' attribute. Specify only one of them!");
         }
 
@@ -137,7 +136,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             Action createAction = () => this.testee.Create(bindingElement, bindingRootMock.Object);
 
-            createAction.ShouldThrow<ConfigurationErrorsException>()
+            createAction.ShouldThrow<XmlException>()
                 .WithMessage("Couldn't resolve type 'UnknownType, Ninject.Extensions.Xml.Test' defined in 'to' attribute.");
         }
 
@@ -151,7 +150,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             Action createAction = () => this.testee.Create(bindingElement, bindingRootMock.Object);
 
-            createAction.ShouldThrow<ConfigurationErrorsException>()
+            createAction.ShouldThrow<XmlException>()
                 .WithMessage("Couldn't resolve type 'UnknownType, Ninject.Extensions.Xml.Test' defined in 'toProvider' attribute.");
         }
 

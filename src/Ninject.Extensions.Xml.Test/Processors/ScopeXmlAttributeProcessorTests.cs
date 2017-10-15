@@ -22,8 +22,7 @@
 #if !NO_GENERIC_MOQ && !NO_MOQ
 namespace Ninject.Extensions.Xml.Processors
 {
-    using System.Configuration;
-
+    using System.Xml;
     using FluentAssertions;
 
     using Moq;
@@ -63,7 +62,7 @@ namespace Ninject.Extensions.Xml.Processors
 
             var testee = CreateTestee(CreateScopeHandler("SomeScope"), CreateScopeHandler("AnotherScope"));
 
-            var exception = Assert.Throws<ConfigurationErrorsException>(() => testee.Process("UnknownScope", ownerMock.Object, syntax));
+            var exception = Assert.Throws<XmlException>(() => testee.Process("UnknownScope", ownerMock.Object, syntax));
 
             exception.Message.Should().Be("The 'owner' element has an unknown value 'UnknownScope' for its 'scope' attribute. Valid values are SomeScope and AnotherScope.");
         }

@@ -1,30 +1,17 @@
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="ScopeXmlAttributeProcessor.cs" company="Ninject Project Contributors">
-//   Copyright (c) 2009-2011 Ninject Project Contributors
-//   Authors: Remo Gloor (remo.gloor@gmail.com)
-//           
-//   Dual-licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
-//   you may not use this file except in compliance with one of the Licenses.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//   or
-//       http://www.microsoft.com/opensource/licenses.mspx
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
+//   Copyright (c) 2007-2009 Enkari, Ltd.
+//   Copyright (c) 2009-2017 Ninject Project Contributors
+//   Licensed under the Apache License, Version 2.0, and the Microsoft Public License (Ms-PL).
 // </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
 namespace Ninject.Extensions.Xml.Processors
 {
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-
+    using System.Xml;
     using Ninject.Extensions.Xml.Scopes;
     using Ninject.Planning.Bindings;
 
@@ -56,20 +43,19 @@ namespace Ninject.Extensions.Xml.Processors
         /// <param name="value">The value of the attribute.</param>
         /// <param name="owner">The owner of this instance.</param>
         /// <param name="syntax">The binding syntax.</param>
-        /// <exception cref="ConfigurationErrorsException">An unknown scope value was found.</exception>
+        /// <exception cref="XmlException">An unknown scope value was found.</exception>
         public override void Process(
-            string value, 
+            string value,
             IOwnXmlNodeProcessor owner,
             IBindingConfigurationSyntax<object> syntax)
         {
-            IScopeHandler scopeHandler;
-            if (this.scopeHandlers.TryGetValue(value, out scopeHandler))
+            if (this.scopeHandlers.TryGetValue(value, out IScopeHandler scopeHandler))
             {
                 scopeHandler.SetScope(syntax);
             }
             else
             {
-                throw new ConfigurationErrorsException(this.GetInvalidScopeErrorMessage(value, owner.XmlNodeName));
+                throw new XmlException(this.GetInvalidScopeErrorMessage(value, owner.XmlNodeName));
             }
         }
 

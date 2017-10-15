@@ -1,4 +1,0 @@
-Version 3.0.0.0
----------------
-- Removed: No web builds. All builds are have not reference to System.Web anymore
-- Changed: InRequestScope support requires the Ninject.Web.Common.Xml extension shipped with Ninject.Web.Common

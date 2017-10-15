@@ -24,8 +24,8 @@ namespace Ninject.Extensions.Xml.Processors
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
+    using System.Xml;
     using System.Xml.Linq;
     using FluentAssertions;
     using Moq;
@@ -58,7 +58,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.SetOwner(this.ownerMock.Object);
             Action processChildElements = () => this.testee.ProcessChildElements(this.element, this.syntax);
 
-            processChildElements.ShouldThrow<ConfigurationErrorsException>()
+            processChildElements.ShouldThrow<XmlException>()
                 .WithMessage("<bind> element contains an unknown element type 'SomeElement'.");
         }
 
@@ -73,7 +73,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.SetOwner(this.ownerMock.Object);
             Action processChildElements = () => this.testee.ProcessChildElements(this.element, this.syntax);
 
-            processChildElements.ShouldThrow<ConfigurationErrorsException>()
+            processChildElements.ShouldThrow<XmlException>()
                 .WithMessage("<bind> element contains an unknown element type 'unknownElement'.");
         }
 
@@ -97,7 +97,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.SetOwner(this.ownerMock.Object);
             Action processAttributeAction = () => this.testee.ProcessAttributes(this.element, this.syntax);
 
-            processAttributeAction.ShouldThrow<ConfigurationErrorsException>().WithMessage("<bind> element contains an unknown element type 'to'.");
+            processAttributeAction.ShouldThrow<XmlException>().WithMessage("<bind> element contains an unknown element type 'to'.");
         }
 
         [Fact]
@@ -112,7 +112,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.SetOwner(this.ownerMock.Object);
             Action processAttributeAction = () => this.testee.ProcessAttributes(this.element, this.syntax);
 
-            processAttributeAction.ShouldThrow<ConfigurationErrorsException>()
+            processAttributeAction.ShouldThrow<XmlException>()
                 .WithMessage("<bind> element contains an unknown element type 'to'.");
         }
 
@@ -140,7 +140,7 @@ namespace Ninject.Extensions.Xml.Processors
             this.testee.SetOwner(this.ownerMock.Object);
             Action processAttributesAction = () => this.testee.ProcessAttributes(this.element, this.syntax);
 
-            processAttributesAction.ShouldThrow<ConfigurationErrorsException>()
+            processAttributesAction.ShouldThrow<XmlException>()
                 .WithMessage("Required attributes for element <bind> not found: required");
         }
 

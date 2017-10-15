@@ -21,7 +21,7 @@
 
 namespace Ninject.Extensions.Xml.Extensions
 {
-    using System.Configuration;
+    using System.Xml;
     using System.Xml.Linq;
 
     using FluentAssertions;
@@ -52,7 +52,7 @@ namespace Ninject.Extensions.Xml.Extensions
         [Fact]
         public void RequiredAttributeThrowsExceptionIfAttributeNotExists()
         {
-            AssertionExtensions.ShouldThrow<ConfigurationErrorsException>(() => this.element.RequiredAttribute("noneExistingAttribute"));
+            AssertionExtensions.ShouldThrow<XmlException>(() => this.element.RequiredAttribute("noneExistingAttribute"));
         }
     }
 }

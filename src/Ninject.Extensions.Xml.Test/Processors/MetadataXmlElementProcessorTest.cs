@@ -22,7 +22,7 @@
 #if !NO_GENERIC_MOQ && !NO_MOQ
 namespace Ninject.Extensions.Xml.Processors
 {
-    using System.Configuration;
+    using System.Xml;
     using System.Xml.Linq;
 
     using FluentAssertions;
@@ -63,7 +63,7 @@ namespace Ninject.Extensions.Xml.Processors
             var syntaxMock = CreateBindingSyntaxMock();
             var testee = this.CreateTestee();
 
-            var exception = Assert.Throws<ConfigurationErrorsException>(() => testee.Process(element, CreateOwner(), syntaxMock.Object));
+            var exception = Assert.Throws<XmlException>(() => testee.Process(element, CreateOwner(), syntaxMock.Object));
 
             exception.Message.Should().Be("The 'metadata' element does not have the required attribute 'key'.");
         }
@@ -77,7 +77,7 @@ namespace Ninject.Extensions.Xml.Processors
             var syntaxMock = CreateBindingSyntaxMock();
             var testee = this.CreateTestee();
 
-            var exception = Assert.Throws<ConfigurationErrorsException>(() => testee.Process(element, CreateOwner(), syntaxMock.Object));
+            var exception = Assert.Throws<XmlException>(() => testee.Process(element, CreateOwner(), syntaxMock.Object));
 
             exception.Message.Should().Be("The 'metadata' element does not have the required attribute 'value'.");
         }

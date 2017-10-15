@@ -22,8 +22,7 @@
 namespace Ninject.Extensions.Xml.Extensions
 {
     using System.Collections.Generic;
-    using System.Configuration;
-
+    using System.Xml;
     using FluentAssertions;
 
     using Xunit;
@@ -35,7 +34,7 @@ namespace Ninject.Extensions.Xml.Extensions
         {
             var dictionary = new Dictionary<string, int>();
 
-            Assert.Throws<ConfigurationErrorsException>(
+            Assert.Throws<XmlException>(
                 () => dictionary.GetProcessor("SomeKey", "Parent"));
         }
 

@@ -24,8 +24,6 @@
 namespace Ninject.Extensions.Xml.XmlModuleTests
 {
     using System;
-    using System.Collections.Generic;
-    using Ninject.Extensions.Xml.Processors;
 
     public class XmlModuleContext : IDisposable
     {
