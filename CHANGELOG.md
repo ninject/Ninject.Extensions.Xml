@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
  - Support .NET Standard 2.0
- - Cab read configuration from app.config/web.config (.NET Framework only)
+ - Can read configuration from app.config/web.config (.NET Framework only)
 
 ### Removed
  - .NET 3.5, .NET 4.0 and Silverlight
